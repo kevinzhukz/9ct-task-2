@@ -31,4 +31,11 @@ A Plug-in Nightlight system that connects directly into any standard wall outlet
 | If Night light turns off after 30 secs if theres no movement        |  Room is dark, nightlight is triggered on, person steps out of PIR sensors view, stopwatch starts when LED light turns on            |  At exactly 30 seconds, night light dims and turns off.            |
 
 #### Non Functional Requirements
-- Response time must be 
+- Efficiency:
+The system should only use power when needed, not wasting energy unecessarily. It should stay off when there is another light ssource present and turn on only when it's dark and motion is detected.
+
+- Response Time:
+The light should switch on immediantly (roughly within ______) after motion is detected in a dark room.
+
+- Accuracy:
+The system should reliably detect movement in only the dark and emit light when both conditions are met (movement and darkness).
