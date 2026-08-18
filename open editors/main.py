@@ -1,139 +1,117 @@
-"""
-Plug in Nightlight - Before testing/ Early Model
-
-This program simulates a nightlight system using an LDR and PIR sensor.
-The nightlight only turns on when the room is dark AND motion is detected.
-The light remains on for 30 seconds before turning off.
-"""
-
+from machine import Pin, ADC, time_pulse_us
 import time
 
+light_sensor = ADC(26)  # light sensor/LDR
+trig = Pin(15, Pin.OUT)  # ultrasonic trigger
+echo = Pin(17, Pin.IN)  # ultrasonic echo
+led = Pin(16, Pin.OUT)  # LED light
+button = Pin(14, Pin.IN, Pin.PULL_UP)  # button for on and off before system starts
 
-# Variables
-# The amount of time the nightlight stays on.
-light_duration = 30
-
-# Stores whether the LED is currently on or off.
-led_on = False
+system_on = True
+light_limit = 50
+motion_limit = 5
+light_time = 30
 
 
-# FUNCTIONS
-def checklightsensor():
+def light():
     """
-    Checks whether the room is dark
-
-    In the early model, user input is used to represent/copy
-    the LDR light sensor
-
-    Returns:
-        True if the room is dark.
-        False if the room is bright.
-    """
-
-    light = input("Is the room dark? (yes/no): ").lower()
-
-    if light == "yes":
-        return True
-    else:
-        return False
-
-
-def checkmotionsensor():
-    """
-    Checks whether motion has been detected
-
-    In the early model, user input is used to represent/copy
-    the PIR motion sensor
-
-    Returns:
-        True if motion is detected.
-        False if no motion is detected.
-    """
-
-    motion = input("Is motion detected? (yes/no): ").lower()
-
-    if motion == "yes":
-        return True
-    else:
-        return False
-
-
-def turnlighton():
-    """
-    Turns the nightlight LED on when movement is detected
-    in a dark room
-    """
-
-    global led_on
-
-    led_on = True
-    print("Nightlight ON: gentle glow activated.")
-
-
-def turnlightoff():
-    """
-    Turns the nightlight LED off
-    """
-
-    global led_on
-
-    led_on = False
-    print("Nightlight OFF")
-
-
-def starttimer():
-    """
-    Starts the 30-second timer after the nightlight
-    has been activated
-
-    Once 30 seconds have passed, the LED is turned off
-    """
-
-    print("30-second timer started.")
-
-    # Keep the LED on for the required 30 seconds.
-    time.sleep(light_duration)
-
-    # Turn the nightlight off after the timer finishes.
-    turnlightoff()
-
-# MAINLINE ROUTINE
-def main():
-    """
-    Runs the main nightlight algorithm.
-
-    The system checks the light level first.
+    Checks the light level in the room using the LDR.
     If the room is dark, it checks for movement.
-    The LED only turns on when both conditions are met.
     """
 
-    print("Nightlight system starting...")
+    light_level = light_sensor.read_u16()
 
-    # 1) Check the LDR/light sensor.
-    dark = checklightsensor()
-
-    # 2) If the room is bright, keep the LED off.
-    if not dark:
-        print("Room is bright. Nightlight remains OFF.")
-        turnlightoff()
-        return
-
-    # 3) The room is dark, so check the PIR sensor.
-    motion = checkmotionsensor()
-
-    # 4) If movement is detected, turn the LED on.
-    if motion:
-        turnlighton()
-
-        `# 5) Keep the LED on for 30 seconds.
-        starttimer()
-
-    # 6) If there is no movement, keep the LED off.
+    # if the light level is low, the room is dark
+    if light_level <= light_limit:
+        motion_detect()
     else:
-        print("No motion detected. Nightlight remains OFF.")
-        turnlightoff()
+        led.off()
 
 
-# PROGRAM START
-if __name__ == "__main__":
-    main()
+def distance():
+    """
+    Measures the distance using the ultrasonic sensor
+    and returns the distance in centimetres.
+    """
+
+    # Send a short signal to the ultrasonic sensor
+    trig.value(0)
+    time.sleep_us(2)
+    trig.value(1)
+    time.sleep_us(10)
+    trig.value(0)
+
+    # Measure how long the echo takes to return
+    duration = time_pulse_us(echo, 1)
+
+    # convert the time into distance
+    distance_cm = (duration * 0.0343) / 2
+
+    return distance_cm
+
+# Ultrasonic sensor code is learnt from a tutorial https://randomnerdtutorials.com/raspberry-pi-pico-hc-sr04-micropython/
+def motion_detect():
+    """
+    Checks if there has been movement by comparing
+    two distance measurements.
+    """
+
+    starting_distance = distance()
+
+    time.sleep(0.1)
+
+    current_distance = distance()
+
+    # If the distance changes by more than 5 cm,
+    # movement has been detected
+    if abs(current_distance - starting_distance) >= motion_limit:
+        turn_light_on()
+    else:
+        led.off()
+
+
+def turn_light_on():
+    """
+    Turns the LED on for 30 seconds.
+    If more movement is detected, the timer starts again.
+    """
+
+    led.on()
+
+    start_time = time.ticks_ms()
+
+    while time.ticks_diff(time.ticks_ms(), start_time) < light_time * 1000:
+
+        # Check for more movement while the light is on
+        if motion_detect():
+            start_time = time.ticks_ms()
+
+        # Stop the light if the button is used to turn
+        # the system off
+        if not system_on:
+            break
+
+        time.sleep(0.1)
+
+    led.off()
+
+
+while True:
+
+    # Check if the button has been pressed
+    if button.value() == 0:
+        system_on = not system_on
+
+        # Turn the LED off when the system is switched off
+        if not system_on:
+            led.off()
+
+        # Prevent the button from being detected twice
+        time.sleep(0.5)
+
+    if system_on:
+        light()
+    else:
+        led.off()
+
+    time.sleep(0.1)
