@@ -53,6 +53,16 @@ The test was mostly successful because when the room was dark, the ultrasonic se
 
 Test Case 3: Light turns off after 30s
 
+The test was successful because the LED turned off after the 30s timer when no further movement was detected.We used a stopwatch to compare the programmed timer with the actual time and checked that the LED switched off after the required period. One challenge was making sure the timer did not interfere with the other parts of the program, especially when checking for further movement. The program could be improved by making the timer more accurate and allowing the ultrasonic sensor to continuously check for movement while the LED is on.
+
+
+## PMI
+***Plus***:
+
+***Minus***:
+
+***Interesting***:
+## Final Evaluation
 
 
 
