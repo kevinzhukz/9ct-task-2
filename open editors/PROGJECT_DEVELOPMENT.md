@@ -7,13 +7,13 @@
 #### The Need
 Waking up at 2:00 AM to use the bathroom or complete other tasks, resulting in either stubbing your toe in the dark or blinding yourself by turning on the bright overhead lights.
 #### The Proposed Solution
-A Plug-in Nightlight system that connects directly into any standard wall outlet in your hallway, kitchen, or bathroom. The built-in light sensor ensures the device stays asleep during daylight or when overhead lights are on; when the room goes dark, the motion sensor activates to trigger a gentle, downward-facing glow for 30 seconds upon detecting movement. 
+A Plug in Nightlight system that connects directly into any standard wall outlet in your hallway, kitchen, or bathroom. The built in light sensor ensures the device stays asleep during daylight or when overhead lights are on; when the room goes dark, the motion sensor activates to trigger a gentle glow for 30 seconds upon detecting movement. 
 
 #### Key Actions
 - The microcontroller checks the light sensor (LDR) to determine if the room is currently dark or bright.
 - If the light sensor confirms the room is dark, the microcontroller activates and monitors the ultrasonic sensor to detect changes in distance caused by movement.
 - When the PIR sensor detects movement in the dark, the microcontroller sends a signal to turn on the plugged in night light.
-- The microcontroller starts a 30-second timer the moment motion is detected, keeping the LED on for that duration, and then switches the LED off automatically once the time expires
+- The microcontroller starts a 30s timer the moment motion is detected, keeping the LED on for that duration, and then switches the LED off automatically once the time expires
 
 #### Functional Requirements
 - Light Sensor Input: If light levels are high (daylight or other lights on), the system must remain in sleep mode and keep the LED output off.
@@ -62,9 +62,36 @@ The test was successful because the LED turned off after the 30s timer when no f
 ***Minus***:
 
 ***Interesting***:
+
+
 ## Final Evaluation
+Evaluate your Final Test in Relation to Functional Criteria:
+
+Our final test was mostly successful in meeting the functional requirements of our project. The LDR was able to detect when the room was dark and the ultrasonic sensor detected movement, causing the LED to turn on. The button also allowed the system to be turned on and off, and the timer turned the LED off after 30 seconds. However, the ultrasonic sensor was sometimes less accurate when detecting small movements, so this is an area that could be improved.
+
+****Evaluate our Final Test in Relation to Non-Functional Criteria:****
+
+Our final test met most of the non functional requirements, including efficiency, response time and accuracy. The system was efficient because the LED stayed off when the room was bright and only activated when movement was detected in darkness. The response time was quick enough for the user to receive light when moving around at night. We also had a button to turn the system on and off which would be useful to save battery during they day when it will not be needed. However, the accuracy could be improved because the ultrasonic sensor sometimes struggled to detect slow or small movements.
+
+****Evaluate our Final Performance in Relation to the Identified Need:****
+
+Our final product successfully addressed the original problem of needing to move around at night without turning on a bright overhead light. When the room was dark and movement was detected, the LED provided light so the user could see where they were going. The 30 sec timer also prevented the light from staying on unnecessarily, helping to save energy. Overall, our final product provided a practical solution to the identified need, although the movement detection could be made more reliable as noted before.
+
+****Evaluate our Project in Relation to Project Management:****
+
+We managed the project by first identifying the problem and creating requirements before developing and testing the code and wiring. We separated the program into different functions for the LDR, ultrasonic sensor, LED and timer, which made it easier to find and fix errors. During testing, we identified problems with the sensor readings and adjusted the program to improve its performance. One area we could improve is managing our time better so we could spend more time testing different sensor values and hardware configurations.
+
+****Evaluate our Project in Relation to Peer Feedback:****
+
+Haven't got peer feed back yet will do after i get peer feedback
+
+****Justify Future Improvements We Could Make to Our Final Product:****
+
+There are several improvements we could make to our final product. The biggest hardware improvement would be replacing the ultrasonic sensor with a PIR sensor, as a PIR sensor is designed specifically to detect human movement and could be more reliable for this purpose. We could also improve the LDR by testing different light levels and selecting a more accurate value for detecting darkness. Another improvement would be making the program more efficient by allowing the sensors to continuously monitor movement while the 30s timer is running. These changes would improve the accuracy, reliability and overall effectiveness of our nightlight solution.
 
 
 
 
-### Flow charts and Pseudocode (will paste image of flowchart and copy past pseudocode from doc)
+
+
+
