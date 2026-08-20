@@ -3,11 +3,9 @@ import time
 
 light_sensor = ADC(26)  # light sensor/LDR
 trig = Pin(15, Pin.OUT)  # trigger
-echo = Pin(17, Pin.IN)  # echo
+echo = Pin(17, Pin.IN)  #  echo
 led = Pin(16, Pin.OUT)  # LED light
-button = Pin(14, Pin.IN, Pin.PULL_UP)  # button for on and off before system starts
 
-system_on = True
 light_limit = 50
 motion_limit = 5
 light_time = 30
@@ -21,7 +19,7 @@ def light():
 
     light_level = light_sensor.read_u16()
 
-    # If the light level is low, the room is dark
+    # if the light level is low, the room is dark
     if light_level <= light_limit:
 
         # check if movement has been detected
@@ -29,7 +27,7 @@ def light():
             turn_light_on()
 
     else:
-        # if the room is bright, keep the LED off
+        # If the room is bright, keep the LED off
         led.off()
 
 
@@ -46,16 +44,16 @@ def distance():
     time.sleep_us(10)
     trig.value(0)
 
-    # Measure how long the echo takes to return
+    # measure how long the echo takes to return
     duration = time_pulse_us(echo, 1)
 
-    # Convert the time into distance
+    # convert the time into distance
     distance_cm = (duration * 0.0343) / 2
 
     return distance_cm
 
 
-# ultrasonic sensor code is learnt from a tutorial:
+# Ultrasonic sensor code was learnt from this tutorial:
 # https://randomnerdtutorials.com/raspberry-pi-pico-hc-sr04-micropython/
 def motion_detect():
     """
@@ -72,7 +70,7 @@ def motion_detect():
 
     current_distance = distance()
 
-    # If the distance changes by more than 5 cm,
+    # if the distance changes by more than 5 cm,
     # movement has been detected
     if abs(current_distance - starting_distance) >= motion_limit:
         return True
@@ -96,11 +94,6 @@ def turn_light_on():
         if motion_detect():
             start_time = time.ticks_ms()
 
-        # Stop the light if the button is used to turn
-        # the system off
-        if not system_on:
-            break
-
         time.sleep(0.1)
 
     led.off()
@@ -108,21 +101,7 @@ def turn_light_on():
 
 while True:
 
-    # Check if the button has been pressed
-    if button.value() == 0:
-        system_on = not system_on
-
-        # Turn the LED off when the system is switched off
-        if not system_on:
-            led.off()
-
-        # Prevent the button from being detected twice
-        time.sleep(0.5)
-
-    if system_on:
-        light()
-    else:
-        # Keep the LED off when the system is switched off
-        led.off()
+    # Continuously run the nightlight system
+    light()
 
     time.sleep(0.1)
