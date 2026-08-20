@@ -1,12 +1,16 @@
-Main:
 BEGIN Main
     WHILE TRUE
-        Read Light Sensor
-        IF Room is Dark THEN
-            Read Motion Sensor
-            IF Motion Detected THEN
-                Call Activate_Light
-                Call Run_Timer
+        Check ON/OFF Button
+        IF System is ON THEN
+            Read Light Sensor
+            IF Room is Dark THEN
+                Read Ultrasonic Sensor
+                IF Motion Detected THEN
+                    Call Activate_Light
+                    Call Run_Timer
+                ELSE
+                    Call System_Sleep
+                END IF
             ELSE
                 Call System_Sleep
             END IF
@@ -15,19 +19,17 @@ BEGIN Main
         END IF
     END WHILE
 END Main
-Subroutines:
-Activate_light:
+
+Activate_Light:
+
 BEGIN Activate_Light
-    Set LED brightness to required level
-    (450 lumen target)
     Turn LED ON
 END Activate_Light
 
 System_Sleep:
 
 BEGIN System_Sleep
-    Turn LED OFF
-    Enter Low Power Mode
+    Turn LED OFF  #keep system waiting
 END System_Sleep
 
 Run_Timer:

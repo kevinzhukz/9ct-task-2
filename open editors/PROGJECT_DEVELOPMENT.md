@@ -19,16 +19,17 @@ A Plug in Nightlight system that connects directly into any standard wall outlet
 - Light Sensor Input: If light levels are high (daylight or other lights on), the system must remain in sleep mode and keep the LED output off.
 - Motion Sensor Input: If the room is dark and the ultrasonic sensor detects human movement, the system must trigger the LED turning on event.
 - LED Output: When there's motion detection in the dark, the LED must instantly turn on and project a gentle glow.
-- Timer Control: The system must keep the LED illuminated for approximately 30 seconds (maybe one second difference +-1s) after motion is detected, then automatically turn the LED off if no further movement is sensed.
+- Timer Control: The system must keep the LED illuminated for approximately 30s (maybe one second difference +-1s) after movement is detected. If further movement is detected while the LED is on, the 30s timer should restart. If no further movement is detected, the LED should automatically turn off.
 - The nightlight should produce a gentle glow, providing enough light for safe movement without requiring the user to turn on the main room lights.
+
 
 
 #### Test Cases
 | Test Case | Input     | Expected Output   |
 |---------- |---------- |----------------   |
-| Theres is other sources of light |Other light is on and then hand is waved in front of the Ultrasonic Sensor|Ultrasonic sensor should not transmit signals to the light so, no light turns on |
+| Theres is other sources of light |Other light is on and then hand is waved in front of the Ultrasonic Sensor| The ultrasonic sensor may detect movement, but the LED should remain off because the LDR detects that there is enough light. |
 |There is no other source of light the room is pitch dark| Hand is waved in front in front of the Ultrasonic sensor, Ultrasonic sensor reads the motion and transmits a signal to the light| Light from nightlight turns on for 30 seconds                   |
-| If Night light turns off after 30 secs if theres no movement        |  Room is dark, nightlight is triggered on, person steps out of Ultrasonic sensors view, stopwatch starts when LED light turns on            |  At exactly 30 seconds, night light dims and turns off.            |
+| If Night light turns off after 30 secs if theres no movement        |  Room is dark, nightlight is triggered on, person steps out of Ultrasonic sensors view, stopwatch starts when LED light turns on            |  At approximately 30 seconds, night light turns off.            |
 
 #### Non Functional Requirements
 - Efficiency:
@@ -49,7 +50,7 @@ The test was successful because the LDR detected that there was enough light in 
 
 Test Case 2: Dark room and Movement detected
 
-The test was mostly successful because when the room was dark, the ultrasonic sensor detected a change in distance and the LED turned on. We tested the ultrasonic sensor by changing the distance between Alfonso's hand and the sensor and adjusted the movement limit when the sensor was not detecting smaller movements. One challenge was that the ultrasonic sensor did not always detect slow or small movements accurately. The program could be improved by taking multiple distance readings and using them to make movement detection more reliable.
+The test was mostly successful because when the room was dark, the ultrasonic sensor detected a change in distance and the LED turned on. We tested the ultrasonic sensor by changing the distance between Alfonso's hand and the sensor and adjusted the movement limit when the sensor was not detecting smaller movements. The program could be improved by taking multiple distance readings and using them to make movement detection more reliable.
 
 Test Case 3: Light turns off after 30s
 
@@ -68,34 +69,27 @@ Fayaaz Kabir| The LDR and ultrasonic sensor worked well together to detect darkn
 
 
 
-## Final Evaluation
-Evaluate your Final Test in Relation to Functional Criteria:
+Final Evaluation
+Evaluate our Final Test in Relation to Functional Criteria:
 
-Our final test was mostly successful in meeting the functional requirements of our project. The LDR was able to detect when the room was dark most of the time, although its readings sometimes changed depending on the surrounding light, causing the LED to turn on. The button should have allowed the system to be turned on and off but sometimes malfunctioned due inconsistent button readings, and the timer turned the LED off after 30 seconds. However, the biggest problem was the button malfunctioning, so this is an area that could be fixed and improved.
+Our final test was mostly successful in meeting the functional requirements of our project. The LDR was able to detect when the room was dark and bright, although the readings sometimes changed depending on the surrounding light. When the room was dark, the ultrasonic sensor was able to detect movement by measuring changes in distance and the LED turned on as expected. The LED also remained off when there was enough light in the room, which showed that the LDR and ultrasonic sensor worked together to control the nightlight. We also proved the 30sec timer also worked successfully by using a stopwatch to measure the time. It turned the LED off after the required amount of time when no further movement was detected. When further movement was detected while the LED was on, the timer could restart, allowing the light to remain on while the person/hand was still moving. and the LDR readings were sometimes inconsistent. These issues meant that the system did not work perfectly in every situation, but it still met most of the functional requirements.
 
-****Evaluate our Final Test in Relation to Non-Functional Criteria:****
+Evaluate our Final Test in Relation to Non-Functional Criteria:
 
-Our final test met most of the non functional requirements, including efficiency, response time and accuracy. The system was efficient because the LED stayed off when the room was bright and only activated when movement was detected in darkness. The response time was quick enough for the user to receive light when moving around at night. We also had a button (but did not function the best) to turn the system on and off which would be useful for reducing unnecessary power usage during the day when the system is not needed. However, the accuracy could be improved because the light sensor sometimes struggled to detect the stimulus.
+Our final test met most of the non functional requirements, including efficiency, response time and accuracy. The system was efficient because the LED remained off when there was enough surrounding light and only activated when movement was detected in a dark room. This reduced unnecessary energy use because the LED was not constantly operating. The response time was also quick enough for the user to receive light soon after movement was detected, making the nightlight suitable for someone moving around at night. The accuracy was mostly successful, although the LDR sometimes gave different readings depending on the surrounding light and the ultrasonic sensor could struggle with smaller or slower movements. These problems reduced the reliability of the system in some situations. Overall, the final test showed that the nightlight was efficient and responsive, but its accuracy could be improved through better sensor calibration and more reliable movement detection.
 
-****Evaluate our Final Performance in Relation to the Identified Need:****
+Evaluate our Final Performance in Relation to the Identified Need:
 
-Our final product successfully addressed the original problem of needing to move around at night without turning on a bright overhead light. When the room was dark and movement was detected, the LED provided light so the user could see where they were going. The 30 sec timer also prevented the light from staying on unnecessarily, helping to save energy. Overall, our final product provided a practical solution to the identified need, although the movement detection could be made more reliable as noted before.
+Our final product successfully addressed the original problem of needing to move around at night without turning on a bright light. When the room was dark and movement was detected, the LED provided enough light for the user to see where they were going without needing to turn on the main room lights. This created a more comfortable solution because the light was only activated when it was needed. The 30s timer also helped prevent the LED from staying on unnecessarily, which improved the efficiency of the product. The use of the LDR meant that the system could remain inactive when there was already enough light in the room. I think the final product provided a practical solution to the identified need and demonstrated that the main idea of an automatic nightlight was successful.
 
-****Evaluate our Project in Relation to Project Management:****
+Evaluate our Project in Relation to Project Management:
 
-We managed the project by first identifying the problem and creating requirements before developing and testing the code and wiring. We separated the program into different functions for the LDR, ultrasonic sensor, LED and timer, which made it easier to find and fix errors. During testing, we identified problems with the sensor readings and adjusted the program to improve its performance. One area we could improve is managing our time better so we could spend more time testing different sensor values and hardware configurations.
+We managed the project by first identifying the problem, developing requirements and planning how the sensors, microcontroller and LED would work together. We then developed the pseudocode and flowcharts before creating and testing the program and wiring. During development, we tested the LDR and ultrasonic sensor and identified problems with their readings. We adjusted the light limit and movement limit to improve the performance of the system. We also tested the 30-second timer to make sure the LED switched off correctly and tested the system under different lighting and movement conditions. Separating the program into different functions for the LDR, ultrasonic sensor, movement detection, LED and timer made the code easier to understand and helped us identify and fix problems. One area we could improve in our project management was time management. More time could have been spent testing different sensor values and hardware configurations, which may have improved the accuracy and reliability of the final product.
 
-****Evaluate our Project in Relation to Peer Feedback:****
+Evaluate our Project in Relation to Peer Feedback:
 
-Haven't got peer feed back yet will do after i get peer feedback
+Based on the peer feedback we received, our project had several strengths as well as areas that could be improved. A positive was that the LDR and ultrasonic sensor worked together to detect darkness and movement, allowing the LED to turn on when required. The wiring and code also worked well for most of the testing. However, the feedback identified that the LDR readings could change depending on the surrounding light, and the LED only had one brightness level. One suggestion from the feedback was to add a button that would allow the user to manually turn the system on and off. We agreed with this feedback because a button would give the user more control over the nightlight and allow it to be switched off when it is not needed. The feedback also supported the problems we identified during our own testing. Overall, the peer feedback helped us identify useful improvements that could make our nightlight more reliable, convenient and easier to use.
 
-****Justify Future Improvements We Could Make to Our Final Product:****
+Justify Future Improvements We Could Make to Our Final Product:
 
-There are several improvements we could make to our final product. The biggest hardware improvement would be replacing the ultrasonic sensor with a PIR sensor, as a PIR sensor is designed specifically to detect human movement and could be more reliable for this purpose. We could also improve the LDR by testing different light levels and selecting a more accurate value for detecting darkness. Another improvement would be making the program more efficient by allowing the sensors to continuously monitor movement while the 30s timer is running. These changes would improve the accuracy, reliability and overall effectiveness of our nightlight solution.
-
-
-
-
-
-
-
+There are several improvements that could be made to our final product. The biggest hardware improvement would be replacing the ultrasonic sensor with a PIR sensor because a PIR sensor is specifically designed to detect human movement and could provide more reliable movement detection. This would reduce the problem of the ultrasonic sensor missing small or slow movements. The LDR could also be improved by testing a wider range of lighting conditions and calibrating the light limit more accurately. This would make the system better at determining when the room is actually dark and reduce unnecessary activation of the LED. Another improvement would be adding different brightness levels to the LED so that the user could have a softer light at night while still having enough brightness to see safely. On the software side, the movement detection could be improved by taking multiple sensor readings and comparing them to reduce inaccurate readings. These improvements would increase the accuracy, reliability, efficiency and comfort of the nightlight and would make it a more effective solution to the original problem.

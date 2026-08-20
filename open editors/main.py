@@ -2,8 +2,8 @@ from machine import Pin, ADC, time_pulse_us
 import time
 
 light_sensor = ADC(26)  # light sensor/LDR
-trig = Pin(15, Pin.OUT)  # ultrasonic trigger
-echo = Pin(17, Pin.IN)  # ultrasonic echo
+trig = Pin(15, Pin.OUT)  # trigger
+echo = Pin(17, Pin.IN)  # echo
 led = Pin(16, Pin.OUT)  # LED light
 button = Pin(14, Pin.IN, Pin.PULL_UP)  # button for on and off before system starts
 
@@ -21,10 +21,15 @@ def light():
 
     light_level = light_sensor.read_u16()
 
-    # if the light level is low, the room is dark
+    # If the light level is low, the room is dark
     if light_level <= light_limit:
-        motion_detect()
+
+        # check if movement has been detected
+        if motion_detect():
+            turn_light_on()
+
     else:
+        # if the room is bright, keep the LED off
         led.off()
 
 
@@ -44,16 +49,21 @@ def distance():
     # Measure how long the echo takes to return
     duration = time_pulse_us(echo, 1)
 
-    # convert the time into distance
+    # Convert the time into distance
     distance_cm = (duration * 0.0343) / 2
 
     return distance_cm
 
-# Ultrasonic sensor code is learnt from a tutorial https://randomnerdtutorials.com/raspberry-pi-pico-hc-sr04-micropython/
+
+# ultrasonic sensor code is learnt from a tutorial:
+# https://randomnerdtutorials.com/raspberry-pi-pico-hc-sr04-micropython/
 def motion_detect():
     """
     Checks if there has been movement by comparing
     two distance measurements.
+
+    Returns True if movement is detected and False
+    if there is no movement.
     """
 
     starting_distance = distance()
@@ -65,9 +75,9 @@ def motion_detect():
     # If the distance changes by more than 5 cm,
     # movement has been detected
     if abs(current_distance - starting_distance) >= motion_limit:
-        turn_light_on()
+        return True
     else:
-        led.off()
+        return False
 
 
 def turn_light_on():
@@ -112,6 +122,7 @@ while True:
     if system_on:
         light()
     else:
+        # Keep the LED off when the system is switched off
         led.off()
 
     time.sleep(0.1)
