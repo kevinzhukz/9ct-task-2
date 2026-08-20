@@ -57,21 +57,36 @@ The test was successful because the LED turned off after the 30s timer when no f
 
 
 ## PMI
+Mrigaank Sodhi:
+***Plus***: All wiring worked well with no errors, and all sensors achieved their purpose in detecting the stimulus which solved their original problem flawlessly.
+
+***Minus***: There was no solution if there was an accidental turn on, such as a button to turn it off.
+
+***Implication***: A working button to turn the system on and off when there is an unneccessary turn on.
+
+Zach Timbrell:
+***Plus***: Good comments and understandable code, all wires and sensors worked immaculately.
+
+***Minus***: It doesnt have different brightness levels and colours
+
+***Implication***: Switiching the colour of the light and maybe experimenting with the brightness of the levels.
+
+Fayaaz Kabir:
+
 ***Plus***:
 
 ***Minus***:
 
-***Interesting***:
-
+***Implication***:
 
 ## Final Evaluation
 Evaluate your Final Test in Relation to Functional Criteria:
 
-Our final test was mostly successful in meeting the functional requirements of our project. The LDR was able to detect when the room was dark and the ultrasonic sensor detected movement, causing the LED to turn on. The button also allowed the system to be turned on and off, and the timer turned the LED off after 30 seconds. However, the ultrasonic sensor was sometimes less accurate when detecting small movements, so this is an area that could be improved.
+Our final test was mostly successful in meeting the functional requirements of our project. The LDR was able to detect when the room was dark most of the time and the ultrasonic sensor detected movement, causing the LED to turn on. The button should have allowed the system to be turned on and off but sometimes malfunctioned due, and the timer turned the LED off after 30 seconds. However, the biggest problem was the button malfunctioning, so this is an area that could be fixed and improved.
 
 ****Evaluate our Final Test in Relation to Non-Functional Criteria:****
 
-Our final test met most of the non functional requirements, including efficiency, response time and accuracy. The system was efficient because the LED stayed off when the room was bright and only activated when movement was detected in darkness. The response time was quick enough for the user to receive light when moving around at night. We also had a button to turn the system on and off which would be useful to save battery during they day when it will not be needed. However, the accuracy could be improved because the ultrasonic sensor sometimes struggled to detect slow or small movements.
+Our final test met most of the non functional requirements, including efficiency, response time and accuracy. The system was efficient because the LED stayed off when the room was bright and only activated when movement was detected in darkness. The response time was quick enough for the user to receive light when moving around at night. We also had a button (but did not function the best) to turn the system on and off which would be useful to save battery during they day when it will not be needed. However, the accuracy could be improved because the light sensor sometimes struggled to detect the stimulus.
 
 ****Evaluate our Final Performance in Relation to the Identified Need:****
 
