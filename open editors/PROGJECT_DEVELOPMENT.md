@@ -12,14 +12,14 @@ A Plug in Nightlight system that connects directly into any standard wall outlet
 #### Key Actions
 - The microcontroller checks the light sensor (LDR) to determine if the room is currently dark or bright.
 - If the light sensor confirms the room is dark, the microcontroller activates and monitors the ultrasonic sensor to detect changes in distance caused by movement.
-- When the PIR sensor detects movement in the dark, the microcontroller sends a signal to turn on the plugged in night light.
+- When the Ultrasonic sensor detects movement in the dark, the microcontroller sends a signal to turn on the plugged in night light.
 - The microcontroller starts a 30s timer the moment motion is detected, keeping the LED on for that duration, and then switches the LED off automatically once the time expires
 
 #### Functional Requirements
 - Light Sensor Input: If light levels are high (daylight or other lights on), the system must remain in sleep mode and keep the LED output off.
 - Motion Sensor Input: If the room is dark and the ultrasonic sensor detects human movement, the system must trigger the LED turning on event.
 - LED Output: When there's motion detection in the dark, the LED must instantly turn on and project a gentle glow.
-- Timer Control: The system must keep the LED illuminated for exactly 30 seconds after motion is detected, then automatically turn the LED off if no further movement is sensed.
+- Timer Control: The system must keep the LED illuminated for approximately 30 seconds (maybe one second difference +-1s) after motion is detected, then automatically turn the LED off if no further movement is sensed.
 - The nightlight should produce a gentle glow, providing enough light for safe movement without requiring the user to turn on the main room lights.
 
 
@@ -49,44 +49,33 @@ The test was successful because the LDR detected that there was enough light in 
 
 Test Case 2: Dark room and Movement detected
 
-The test was mostly successful because when the room was dark, the ultrasonic sensor detected a change in distance and the LED turned on. We tested the ultrasonic sensor by changing the distance between my hand and the sensor and adjusted the movement limit when the sensor was not detecting smaller movements. One challenge was that the ultrasonic sensor did not always detect slow or small movements accurately. The program could be improved by taking multiple distance readings and using them to make movement detection more reliable.
+The test was mostly successful because when the room was dark, the ultrasonic sensor detected a change in distance and the LED turned on. We tested the ultrasonic sensor by changing the distance between Alfonso's hand and the sensor and adjusted the movement limit when the sensor was not detecting smaller movements. One challenge was that the ultrasonic sensor did not always detect slow or small movements accurately. The program could be improved by taking multiple distance readings and using them to make movement detection more reliable.
 
 Test Case 3: Light turns off after 30s
 
 The test was successful because the LED turned off after the 30s timer when no further movement was detected.We used a stopwatch to compare the programmed timer with the actual time and checked that the LED switched off after the required period. One challenge was making sure the timer did not interfere with the other parts of the program, especially when checking for further movement. The program could be improved by making the timer more accurate and allowing the ultrasonic sensor to continuously check for movement while the LED is on.
 
 
-## PMI
-Mrigaank Sodhi:
-***Plus***: All wiring worked well with no errors, and all sensors achieved their purpose in detecting the stimulus which solved their original problem flawlessly.
+## PMI Table
 
-***Minus***: There was no solution if there was an accidental turn on, such as a button to turn it off.
 
-***Implication***: A working button to turn the system on and off when there is an unneccessary turn on.
 
-Zach Timbrell:
-***Plus***: Good comments and understandable code, all wires and sensors worked immaculately.
+|Name   | Plus | Minus     | Implication |
+|---------- |---------- |---------- |----------------   |
+|Mrigaank Sodhi | All wiring worked well with no errors, and all sensors achieved their purpose in detecting the stimulus which solved their original problem flawlessly. | There was no solution if there was an accidental turn on, such as a button to turn it off. | A working button to turn the system on and off when there is an unneccessary turn on.
+Zach Timbrell| Good comments and understandable code, all wires and sensors worked immaculately.| It doesnt have different brightness levels and colours |Switiching the colour of the light and maybe experimenting with the brightness of the levels.|
+Fayaaz Kabir| The LDR and ultrasonic sensor worked well together to detect darkness and movement, and the LED turned on when both conditions were met. The wiring was also successful and the system was able to run as intended. | The LED only had one brightness level.| A dimmer or different LED could also be added to allow different brightness levels so the light is more comfortable to use at night.   |
 
-***Minus***: It doesnt have different brightness levels and colours
 
-***Implication***: Switiching the colour of the light and maybe experimenting with the brightness of the levels.
-
-Fayaaz Kabir:
-
-***Plus***:
-
-***Minus***:
-
-***Implication***:
 
 ## Final Evaluation
 Evaluate your Final Test in Relation to Functional Criteria:
 
-Our final test was mostly successful in meeting the functional requirements of our project. The LDR was able to detect when the room was dark most of the time and the ultrasonic sensor detected movement, causing the LED to turn on. The button should have allowed the system to be turned on and off but sometimes malfunctioned due, and the timer turned the LED off after 30 seconds. However, the biggest problem was the button malfunctioning, so this is an area that could be fixed and improved.
+Our final test was mostly successful in meeting the functional requirements of our project. The LDR was able to detect when the room was dark most of the time, although its readings sometimes changed depending on the surrounding light, causing the LED to turn on. The button should have allowed the system to be turned on and off but sometimes malfunctioned due inconsistent button readings, and the timer turned the LED off after 30 seconds. However, the biggest problem was the button malfunctioning, so this is an area that could be fixed and improved.
 
 ****Evaluate our Final Test in Relation to Non-Functional Criteria:****
 
-Our final test met most of the non functional requirements, including efficiency, response time and accuracy. The system was efficient because the LED stayed off when the room was bright and only activated when movement was detected in darkness. The response time was quick enough for the user to receive light when moving around at night. We also had a button (but did not function the best) to turn the system on and off which would be useful to save battery during they day when it will not be needed. However, the accuracy could be improved because the light sensor sometimes struggled to detect the stimulus.
+Our final test met most of the non functional requirements, including efficiency, response time and accuracy. The system was efficient because the LED stayed off when the room was bright and only activated when movement was detected in darkness. The response time was quick enough for the user to receive light when moving around at night. We also had a button (but did not function the best) to turn the system on and off which would be useful for reducing unnecessary power usage during the day when the system is not needed. However, the accuracy could be improved because the light sensor sometimes struggled to detect the stimulus.
 
 ****Evaluate our Final Performance in Relation to the Identified Need:****
 
