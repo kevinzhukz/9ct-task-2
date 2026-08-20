@@ -28,7 +28,7 @@ A Plug in Nightlight system that connects directly into any standard wall outlet
 | Test Case | Input     | Expected Output   |
 |---------- |---------- |----------------   |
 | Theres is other sources of light |Other light is on and then hand is waved in front of the Ultrasonic Sensor| The ultrasonic sensor may detect movement, but the LED should remain off because the LDR detects that there is enough light. |
-|There is no other source of light the room is pitch dark| Hand is waved in front in front of the Ultrasonic sensor, Ultrasonic sensor reads the motion and transmits a signal to the light| Light from nightlight turns on for 30 seconds                   |
+|There is no other source of light the room is pitch dark| Hand is waved in front in front of the Ultrasonic sensor, the ultrasonic sensor detects movement and sends the distance reading to the microcontroller, which turns the LED on| Light from nightlight turns on for 30 seconds                   |
 | If Night light turns off after 30 secs if theres no movement        |  Room is dark, nightlight is triggered on, person steps out of Ultrasonic sensors view, stopwatch starts when LED light turns on            |  At approximately 30 seconds, night light turns off.            |
 
 #### Non Functional Requirements
@@ -54,7 +54,7 @@ The test was mostly successful because when the room was dark, the ultrasonic se
 
 Test Case 3: Light turns off after 30s
 
-The test was successful because the LED turned off after the 30s timer when no further movement was detected.We used a stopwatch to compare the programmed timer with the actual time and checked that the LED switched off after the required period. One challenge was making sure the timer did not interfere with the other parts of the program, especially when checking for further movement. The program could be improved by making the timer more accurate and allowing the ultrasonic sensor to continuously check for movement while the LED is on.
+The test was successful because the LED turned off after the 30s timer when no further movement was detected.We used a stopwatch to compare the programmed timer with the actual time and checked that the LED switched off after the required period. One challenge was making sure the timer did not interfere with the other parts of the program, especially when checking for further movement. One improvement could be making the timer more accurate and improving movement detection so that small or slow movements are detected more reliably while the LED is on.
 
 
 ## PMI Table
@@ -72,7 +72,7 @@ Fayaaz Kabir| The LDR and ultrasonic sensor worked well together to detect darkn
 Final Evaluation
 Evaluate our Final Test in Relation to Functional Criteria:
 
-Our final test was mostly successful in meeting the functional requirements of our project. The LDR was able to detect when the room was dark and bright, although the readings sometimes changed depending on the surrounding light. When the room was dark, the ultrasonic sensor was able to detect movement by measuring changes in distance and the LED turned on as expected. The LED also remained off when there was enough light in the room, which showed that the LDR and ultrasonic sensor worked together to control the nightlight. We also proved the 30sec timer also worked successfully by using a stopwatch to measure the time. It turned the LED off after the required amount of time when no further movement was detected. When further movement was detected while the LED was on, the timer could restart, allowing the light to remain on while the person/hand was still moving. and the LDR readings were sometimes inconsistent. These issues meant that the system did not work perfectly in every situation, but it still met most of the functional requirements.
+Our final test was mostly successful in meeting the functional requirements of our project. The LDR was able to detect when the room was dark and bright, although the readings sometimes changed depending on the surrounding light. When the room was dark, the ultrasonic sensor was able to detect movement by measuring changes in distance and the LED turned on as expected. The LED also remained off when there was enough light in the room, which showed that the LDR and ultrasonic sensor worked together to control the nightlight. We also proved the 30sec timer also worked successfully by using a stopwatch to measure the time. It turned the LED off after the required amount of time when no further movement was detected. When further movement was detected while the LED was on, the timer could restart, allowing the light to remain on while the person/hand was still moving. Also the LDR readings were sometimes inconsistent. These issues meant that the system did not work perfectly in every situation, but it still met most of the functional requirements.
 
 Evaluate our Final Test in Relation to Non-Functional Criteria:
 
